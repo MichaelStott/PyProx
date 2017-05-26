@@ -4,6 +4,7 @@ Scrapes https://www.us-proxy.org/ for list of active proxies. Useful for web scr
 
 ### Demo
 ```python
+from pyprox import PyProx
 import requests
 pyprox = PyProx()
 pyprox.update_proxy_list()
