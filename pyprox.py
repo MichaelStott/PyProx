@@ -37,9 +37,15 @@ class PyProx():
         for proxy in self.proxies:
             if all(item in proxy.items() for item in options.items()):
                filter_prox.append(proxy)
-        return random.choice(filter_prox)
+        while filter_prox:
+            proxy = random.choice(filter_prox)
+            if not self._can_proxy_connect(proxy):
+                filter_prox.remove(proxy)
+            else:
+                return {"http": "http://" + proxy["ip_addr"]}
+        return {}
 
-    def can_proxy_connect(self, proxy, domain=""):
+    def _can_proxy_connect(self, proxy, domain=""):
         # NOTE: If this function returns false, it may not necessarily
         # indicate that the proxy is inactive. The request may have been
         # rejected if the server detects that it did not originate from
@@ -58,8 +64,10 @@ class PyProx():
 if __name__ == "__main__":
     pyprox = PyProx()
     pyprox.update_proxy_list()
-    proxy = pyprox.get_random_proxy(options={"https":"yes",
-                                             "anonymity":"anonymous"})
-    print pyprox.can_proxy_connect(proxy)
+    with requests.Session() as s:
+        r = s.get("https://www.google.com",
+                  proxies=pyprox.get_random_proxy({"https":"yes",
+                                                   "anonymity":"anonymous"}))
+    print r.text
     
     
