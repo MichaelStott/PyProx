@@ -12,7 +12,7 @@ pyprox = PyProx()
 pyprox.update_proxy_list()
 
 # Choose a random proxy from the list for the request. See the source code
-# for more information.
+# for more information on specifying proxy properties.
 with requests.Session() as s:
     r = s.get("https://www.google.com",
               proxies=pyprox.get_random_proxy({"https":"yes",
