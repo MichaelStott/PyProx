@@ -1,6 +1,6 @@
 # PyProx
 
-Scrapes https://www.us-proxy.org/ for list of active proxies that can be used for python requests library. Useful for web scraping.
+Scrapes https://www.us-proxy.org/ for list of active proxies. Useful for web scraping.
 
 ### Demo
 ```python
